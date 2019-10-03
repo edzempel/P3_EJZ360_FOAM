@@ -14,6 +14,25 @@
 <body>
 	<h1>Welcome to FOAMS!</h1>
 	<p>${welcome}</p>
+	<table>
+		<thead>
+			<tr>
+				<th>National ID</th>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Date of Birth</th>
+				<th>Age</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="Zara,nuha,roshy" delims="," var="name">
+			<tr>
+				<td><c:out value="${name}" /></td>
+			</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 
 </body>
 </html>
