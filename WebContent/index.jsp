@@ -13,6 +13,7 @@
 </head>
 <body>
 	<h1>Welcome to FOAMS!</h1>
+	<p>${welcome}</p>
 
 </body>
 </html>

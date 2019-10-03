@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class FoamServlet
+ * 
  * @author ezempel
  */
 @WebServlet({ "/FoamServlet", "/view", "/add", "/edit", "/delete" })
@@ -28,8 +29,7 @@ public class FoamServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		processRequest(request, response);
 	}
 
 	/**
@@ -38,8 +38,19 @@ public class FoamServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		processRequest(request, response);
+	}
+
+	private void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		if (true) {
+			String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
+			request.setAttribute("welcome", welcome);
+		} else {
+			request.setAttribute("errMsg", "Invalid input");
+		}
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 }
