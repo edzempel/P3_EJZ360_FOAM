@@ -1,4 +1,4 @@
-package edu.metrostate.ics425.p2.ejz360.model;
+package edu.metrostate.ics425.p3.ejz360.model;
 
 import java.time.LocalDate;
 
