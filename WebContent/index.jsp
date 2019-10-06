@@ -46,6 +46,9 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<form name="form-add" id="form-add" action="add" method="post">
+		<input type="submit" value="Add athlete" id="submit-add"/>
+	</form>
 
 </body>
 </html>

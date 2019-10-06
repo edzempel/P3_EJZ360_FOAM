@@ -58,7 +58,7 @@ public class FoamServlet extends HttpServlet {
 		// get current action
 		String action = request.getParameter("action");
 		if (action == null) {
-			action = "view";
+			action = "add";
 		}
 
 		if (action == "view") {
@@ -66,9 +66,11 @@ public class FoamServlet extends HttpServlet {
 			request.setAttribute("welcome", welcome);
 
 		} else if (action == "add") {
-			AthleteBean newAthlete = createAthlete(request.getParameter("newID"), request.getParameter("newFirst"),
-					request.getParameter("newDob"), LocalDate.parse(request.getParameter("newLast")));
-			roster.add(newAthlete);
+//			AthleteBean newAthlete = createAthlete(request.getParameter("newID"), request.getParameter("newFirst"),
+//					request.getParameter("newDob"), LocalDate.parse(request.getParameter("newLast")));
+//			roster.add(newAthlete);
+			AthleteBean anotherAthlete = createAthlete("Peter", "Simon", "aaa1111", LocalDate.parse("2000-04-01"));
+			roster.add(anotherAthlete);
 		} else {
 			request.setAttribute("errMsg", "Invalid input");
 		}
