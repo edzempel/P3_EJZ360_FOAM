@@ -39,7 +39,7 @@
 					<td><c:out value="${athlete.lastName}" /></td>
 					<td><c:out value="${athlete.firstName}" /></td>
 					<td><c:out value="${athlete.dateOfBirth}" /></td>
-					<td><c:out value="${athlete.age}" /></td>
+					<td><c:out value="${athlete.age < 0 ? 'invalid' : athlete.age}" /></td>
 					<td><c:out value="${athlete.eligible}" /></td>
 					<td><a href='/edit?id="<c:out value="${athlete.nationalID}" />"'>edit</a></td>
 					<td><a href='/delete?id="<c:out value="${athlete.nationalID}" />"'>delete</a></td>
