@@ -51,16 +51,14 @@ public class FoamServlet extends HttpServlet {
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		
-
 		var sc = getServletContext();
 		String url = "index.jsp";
-		Roster rosterDB = (Roster)sc.getAttribute("rosterDB");
+		Roster rosterDB = (Roster) sc.getAttribute("rosterDB");
 
 		// get current action
 		String action = request.getParameter("action");
 		if (action == null) {
-			action = "view";
+			action = "add";
 		}
 
 		if (action.equals("view")) {
@@ -68,22 +66,23 @@ public class FoamServlet extends HttpServlet {
 			request.setAttribute("welcome", welcome);
 
 		} else if (action.equals("add")) {
-			String newId = request.getParameter("newId");
-			String newLast = request.getParameter("newLast");
-			String newFirst = request.getParameter("newFirst");
-			LocalDate newDob = LocalDate.parse(request.getParameter("newDob"));
-			
-			
-			AthleteBean newAthlete = createAthlete(newId, newLast,
-					newFirst, newDob);
-			
-			AthleteBean anotherAthlete = createAthlete("bbb1111", "Peterson", "Simon",  LocalDate.parse("2000-04-01"));
 			try {
-				rosterDB.add(anotherAthlete);
+				String newId = request.getParameter("newId");
+				String newLast = request.getParameter("newLast");
+				String newFirst = request.getParameter("newFirst");
+				LocalDate newDob = LocalDate.parse(request.getParameter("newDob"));
+				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
+
 				rosterDB.add(newAthlete);
+				
 			} catch (RosterException e) {
+				url = "add.jsp";
 				e.printStackTrace();
-				request.setAttribute("errMsg", String.format("Unable to add athlete: %s ", newAthlete) + e.getMessage());
+				request.setAttribute("errMsg",
+						String.format("Unable to add athlete: %s ", request.getParameter("newId")) + e.getMessage());
+			} catch (Exception ex) {
+				url = "add.jsp";
+				request.setAttribute("errMsg", String.format("%s", ex.getMessage()));
 			}
 		} else {
 			request.setAttribute("errMsg", "Invalid action");
@@ -97,7 +96,7 @@ public class FoamServlet extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("errMsg", "Unable to send roster to browser. " + e.getMessage());
 		}
-		
+
 		// Forward control to the view
 		request.getRequestDispatcher(url).forward(request, response);
 	}
@@ -121,8 +120,6 @@ public class FoamServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
-		
 
 	}
 
