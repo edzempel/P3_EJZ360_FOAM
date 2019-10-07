@@ -44,6 +44,6 @@
 
 		<input type="submit" value="Add athlete" id="submit-new" />
 	</form>
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">${errMsg}</div>
+	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert"><c:out value="${errMsg}" /></div>
 </body>
 </html>

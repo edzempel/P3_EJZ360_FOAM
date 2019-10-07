@@ -48,7 +48,7 @@
 		</tbody>
 	</table>
 
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">${errMsg}</div>
+	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert"><c:out value="${errMsg}" /></div>
 
 	<form name="form-add" id="form-add" action="add.jsp" method="post">
 		<input type="submit" value="Add athlete" id="submit-add" />
