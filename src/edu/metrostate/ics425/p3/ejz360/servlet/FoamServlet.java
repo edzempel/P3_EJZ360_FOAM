@@ -73,8 +73,10 @@ public class FoamServlet extends HttpServlet {
 				LocalDate newDob = LocalDate.parse(request.getParameter("newDob"));
 				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
 
-				rosterDB.add(newAthlete);
-				
+				boolean added = rosterDB.add(newAthlete);
+				if (!added)
+					throw new Exception(String.format("%s is a duplicate id.\n Cannot add: %s", newId, newAthlete));
+
 			} catch (RosterException e) {
 				url = "add.jsp";
 				e.printStackTrace();
