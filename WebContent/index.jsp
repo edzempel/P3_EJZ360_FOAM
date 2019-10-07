@@ -9,13 +9,16 @@
 <!-- <meta charset="utf-8"> -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 
 <title>P3 EJZ360 FOAMS</title>
 </head>
 <body>
-	<h1>Welcome to FOAMS!</h1>
+	<h1><a href="/P3_EJZ360_FOAM/">Welcome to FOAMS!</a></h1>
 	<p>${welcome}</p>
 	<table class="table">
 		<thead>
@@ -25,16 +28,11 @@
 				<th>First Name</th>
 				<th>Date of Birth</th>
 				<th>Age</th>
-				<th>Options</th>
+				<th>Eligible</th>
+				<th colspan="2">Options</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forTokens items="Zara,Nuha,Roshy" delims="," var="name">
-				<tr>
-					<td></td>
-					<td><c:out value="${name}" /></td>
-				</tr>
-			</c:forTokens>
 			<c:forEach var="athlete" items="${roster}">
 				<tr>
 					<td><c:out value="${athlete.nationalID}" /></td>
@@ -42,12 +40,19 @@
 					<td><c:out value="${athlete.firstName}" /></td>
 					<td><c:out value="${athlete.dateOfBirth}" /></td>
 					<td><c:out value="${athlete.age}" /></td>
+					<td><c:out value="${athlete.eligible}" /></td>
+					<td><a href='/edit?id="<c:out value="${athlete.nationalID}" />"'>edit</a></td>
+					<td><a href='/delete?id="<c:out value="${athlete.nationalID}" />"'>delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<form name="form-add" id="form-add" action="add" method="post">
-		<input type="submit" value="Add athlete" id="submit-add"/>
+
+	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">${errMsg}</div>
+
+	<form name="form-add" id="form-add" action="add.jsp" method="post">
+		<input type="submit" value="Add athlete" id="submit-add" />
+		
 	</form>
 
 </body>
