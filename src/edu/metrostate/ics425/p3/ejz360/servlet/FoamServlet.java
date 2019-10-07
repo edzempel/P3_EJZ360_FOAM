@@ -80,13 +80,15 @@ public class FoamServlet extends HttpServlet {
 					throw new Exception(String.format("%s is a duplicate id.\n Cannot add: %s", newId, newAthlete));
 
 			} catch (RosterException e) {
-				url = "add.jsp";
+				
 				e.printStackTrace();
 				request.setAttribute("errMsg",
 						String.format("Unable to add athlete: %s ", request.getParameter("newId")) + e.getMessage());
 			} catch (Exception ex) {
-				url = "add.jsp";
+				
 				request.setAttribute("errMsg", String.format("%s", ex.getMessage()));
+			} finally {
+				url = "add.jsp";
 			}
 		} else {
 			request.setAttribute("errMsg", "Invalid action");
