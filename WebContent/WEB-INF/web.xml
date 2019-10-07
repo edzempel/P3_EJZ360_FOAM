@@ -9,4 +9,18 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <context-param>
+		<param-name>filePath</param-name>
+		<param-value>WEB-INF/Rosters/roster2.txt</param-value>
+	</context-param>
+  
+  <servlet>
+  	<servlet-name>FoamServlet</servlet-name>
+  	<servlet-class>edu.metrostate.ics425.p3.ejz360.servlet.FoamServlet</servlet-class>
+  	<init-param>
+  		<param-name>filePath</param-name>
+  		<param-value>WEB-INF/Rosters/roster.txt</param-value>
+  	</init-param>
+  </servlet>
 </web-app>
