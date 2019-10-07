@@ -24,21 +24,21 @@
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
 				name="newId" placeholder="national ID" pattern="[A-Za-z0-9]+"
-				required="true" type="text" />
+				required="true" type="text" value="${param.newId}"/>
 		</div>
 		<div class="form-group">
 			<label for="form-new-lastName">Last name</label> <input
 				id="form-new-lastName" name="newLast" placeholder="last name"
-				pattern="[A-Za-z]+" required="true" type="text" />
+				pattern="[A-Za-z]+" required="true" type="text" value="${param.newLast}" />
 		</div>
 		<div class="form-group">
 			<label for="form-new-firstName">First name</label> <input
 				id="form-new-firstName" name="newFirst" placeholder="fist name"
-				pattern="[A-Za-z]+" required="true" type="text" />
+				pattern="[A-Za-z]+" required="true" type="text" value="${param.newFirst}" />
 		</div>
 		<div class="form-group">
 			<label for="form-new-dob">Date of birth</label> <input type="date"
-				id="form-new-dob" name="newDob" value="2004-7-24"
+				id="form-new-dob" name="newDob" value="${param.newDob}"
 				min="1900-01-01" max="2020-07-25">
 		</div>
 
