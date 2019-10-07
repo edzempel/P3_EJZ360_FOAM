@@ -70,7 +70,9 @@ public class FoamServlet extends HttpServlet {
 				String newId = request.getParameter("newId");
 				String newLast = request.getParameter("newLast");
 				String newFirst = request.getParameter("newFirst");
-				LocalDate newDob = LocalDate.parse(request.getParameter("newDob"));
+				String newDobString = request.getParameter("newDob");
+
+				LocalDate newDob = newDobString.isBlank() ? null : LocalDate.parse(newDobString);
 				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
 
 				boolean added = rosterDB.add(newAthlete);
