@@ -74,6 +74,15 @@ public class FoamServlet extends HttpServlet {
 
 				LocalDate newDob = newDobString.isBlank() ? null : LocalDate.parse(newDobString);
 				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
+				if(newDob.isBefore(LocalDate.parse("1900-01-01"))) {
+					request.setAttribute("errDob", true);
+					request.setAttribute("feedbackDob", "invalid-feedback");
+					request.setAttribute("feedbackDobMessage", "The date of birth must be after 1900-01-01.");
+					throw new Exception(String.format("%s is invalid. The date of birth must be after 1900-01-01.", newDob.toString()));
+				}else {
+					request.setAttribute("feedbackDob", "valid-feedback");
+					request.setAttribute("feedbackDobMessage", "Looks good!");
+				}
 
 				boolean added = rosterDB.add(newAthlete);
 				if (!added)
@@ -84,7 +93,7 @@ public class FoamServlet extends HttpServlet {
 				request.setAttribute("errMsg",
 						String.format("Unable to add athlete: %s ", request.getParameter("newId")) + e.getMessage());
 			} catch (Exception ex) {
-				request.setAttribute("errMsg", String.format("%s", ex.getMessage()));
+				request.setAttribute("errMsg", String.format("%s ", ex.getMessage()));
 			} finally {
 				url = "add.jsp";
 			}

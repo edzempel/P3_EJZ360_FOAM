@@ -37,9 +37,10 @@
 				pattern="[A-Za-z]+" required="true" type="text" value="${param.newFirst}" />
 		</div>
 		<div class="form-group">
-			<label for="form-new-dob">Date of birth</label> <input type="date"
+			<label for="form-new-dob">Date of birth</label> <input class="form-control ${empty errDob ? 'is-valid' : 'is-invalid'}" type="date"
 				id="form-new-dob" name="newDob" value="${param.newDob}"
 				min="1900-01-01" max="2020-07-25">
+			<div class="${feedbackDob}">${feedbackDobMessage}</div>
 		</div>
 
 		<input type="submit" value="Add athlete" id="submit-new" />
