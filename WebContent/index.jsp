@@ -39,8 +39,8 @@
 					<td><c:out value="${athlete.firstName}" /></td>
 					<td ${empty athlete.dateOfBirth ? "class='table-danger'" : ''}><c:out value="${athlete.dateOfBirth}" /></td>
 					<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out value="${athlete.age < 0 ? '' : athlete.age}" /></td>
-					<td><a href='/edit?id="<c:out value="${athlete.nationalID}" />"'>edit</a></td>
-					<td><a href='/delete?id="<c:out value="${athlete.nationalID}" />"'>delete</a></td>
+					<td><a href='/edit?id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
+					<td><a href='/delete?id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
