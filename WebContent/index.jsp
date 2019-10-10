@@ -28,7 +28,6 @@
 				<th>First Name</th>
 				<th>Date of Birth</th>
 				<th>Age</th>
-				<th>Eligible</th>
 				<th colspan="2">Options</th>
 			</tr>
 		</thead>
@@ -38,9 +37,8 @@
 					<td><c:out value="${athlete.nationalID}" /></td>
 					<td><c:out value="${athlete.lastName}" /></td>
 					<td><c:out value="${athlete.firstName}" /></td>
-					<td><c:out value="${athlete.dateOfBirth}" /></td>
-					<td><c:out value="${athlete.age < 0 ? '' : athlete.age}" /></td>
-					<td><c:out value="${athlete.eligible}" /></td>
+					<td ${empty athlete.dateOfBirth ? "class='table-danger'" : ''}><c:out value="${athlete.dateOfBirth}" /></td>
+					<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out value="${athlete.age < 0 ? '' : athlete.age}" /></td>
 					<td><a href='/edit?id="<c:out value="${athlete.nationalID}" />"'>edit</a></td>
 					<td><a href='/delete?id="<c:out value="${athlete.nationalID}" />"'>delete</a></td>
 				</tr>
