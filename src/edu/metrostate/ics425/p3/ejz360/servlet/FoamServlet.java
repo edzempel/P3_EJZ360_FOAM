@@ -2,6 +2,7 @@ package edu.metrostate.ics425.p3.ejz360.servlet;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,6 +67,7 @@ public class FoamServlet extends HttpServlet {
 			request.setAttribute("welcome", welcome);
 
 		} else if (action.equals("add")) {
+			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
 				String newId = request.getParameter("newId");
 				String newLast = request.getParameter("newLast");
@@ -78,7 +80,7 @@ public class FoamServlet extends HttpServlet {
 					request.setAttribute("errDob", true);
 					request.setAttribute("feedbackDob", "invalid-feedback");
 					request.setAttribute("feedbackDobMessage", "The date of birth must be after 1900-01-01.");
-					throw new Exception(String.format("%s is invalid. The date of birth must be after 1900-01-01.", newDob.toString()));
+					errList.put("errDob", String.format("%s is invalid. The date of birth must be after 1900-01-01.", newDob.toString())) ;
 				}else {
 					request.setAttribute("feedbackDob", "valid-feedback");
 					request.setAttribute("feedbackDobMessage", "Looks good!");
@@ -86,16 +88,22 @@ public class FoamServlet extends HttpServlet {
 
 				boolean added = rosterDB.add(newAthlete);
 				if (!added)
-					throw new Exception(String.format("%s is a duplicate id.\n Cannot add: %s", newId, newAthlete));
+					errList.put("DupId",String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
 
 			} catch (RosterException e) {
 				e.printStackTrace();
-				request.setAttribute("errMsg",
-						String.format("Unable to add athlete: %s ", request.getParameter("newId")) + e.getMessage());
+				errList.put("errRoster",
+						String.format("Unable to add athlete: %s. ", request.getParameter("newId")) + e.getMessage());
 			} catch (Exception ex) {
-				request.setAttribute("errMsg", String.format("%s ", ex.getMessage()));
+				errList.put("errMsg", String.format("%s.", ex.getMessage()));
 			} finally {
-				url = "add.jsp";
+				if(!errList.isEmpty()) {
+					String errMsgList = errList.toString();
+					request.setAttribute("errMsg", errMsgList);
+					url = "add.jsp";
+				}
+				
+				
 			}
 		} else {
 			request.setAttribute("errMsg", "Invalid action");

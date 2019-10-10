@@ -24,27 +24,38 @@
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
 				name="newId" placeholder="national ID" pattern="[A-Za-z0-9]+"
-				required="true" type="text" value="${param.newId}"/>
+				required="true" type="text" value="${param.newId}" />
 		</div>
 		<div class="form-group">
 			<label for="form-new-lastName">Last name</label> <input
 				id="form-new-lastName" name="newLast" placeholder="last name"
-				pattern="[A-Za-z]+" required="true" type="text" value="${param.newLast}" />
+				pattern="[A-Za-z]+" required="true" type="text"
+				value="${param.newLast}" />
 		</div>
 		<div class="form-group">
 			<label for="form-new-firstName">First name</label> <input
 				id="form-new-firstName" name="newFirst" placeholder="fist name"
-				pattern="[A-Za-z]+" required="true" type="text" value="${param.newFirst}" />
+				pattern="[A-Za-z]+" required="true" type="text"
+				value="${param.newFirst}" />
 		</div>
 		<div class="form-group">
-			<label for="form-new-dob">Date of birth</label> <input class="form-control ${empty errDob ? 'is-valid' : 'is-invalid'}" type="date"
-				id="form-new-dob" name="newDob" value="${param.newDob}"
+			<label for="form-new-dob">Date of birth</label> <input
+				class="form-control ${empty errDob ? 'is-valid' : 'is-invalid'}"
+				type="date" id="form-new-dob" name="newDob" value="${param.newDob}"
 				min="1900-01-01" max="2020-07-25">
 			<div class="${feedbackDob}">${feedbackDobMessage}</div>
 		</div>
 
 		<input type="submit" value="Add athlete" id="submit-new" />
 	</form>
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert"><c:out value="${errMsg}" /></div>
+	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
+		<c:out value="${errMsg}" />
+	</div>
+	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
+		<c:forTokens items="${errMsg}" delims="," var="err">
+			<c:out value="${err}" />
+			<p>
+		</c:forTokens>
+	</div>
 </body>
 </html>
