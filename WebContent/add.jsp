@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<form class="form" name="form-new" id="form-new" action="add.jsp"
+	<form class="form" name="form-new" id="form-new" action="add"
 		method="get">
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
@@ -33,10 +33,10 @@
 				value="${param.newLast}" />
 		</div>
 		<div class="form-group">
-			<label for="form-new-firstName">First name</label> <input
+			<label for="form-new-firstName">First name <input
 				id="form-new-firstName" name="newFirst" placeholder="fist name"
 				pattern="[A-Za-z]+" required="true" type="text"
-				value="${param.newFirst}" />
+				value="${param.newFirst}" /></label>
 		</div>
 		<div class="form-group">
 			<label for="form-new-dob">Date of birth</label> <input
@@ -45,20 +45,23 @@
 				min="1900-01-01" max="2020-07-25">
 			<div class="${feedbackDob}">${feedbackDobMessage}</div>
 		</div>
-		
-		<inpput type="hidden" name="action" value="create-new">
-		
+		<div>
+			<input type="hidden" name="action" value="create-new">
+		</div>
+		<div>
+			<input type="submit" value="Add athlete" id="submit-new" />
+		</div>
 
-		<input type="submit" value="Add athlete" id="submit-new" />
 	</form>
 	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
-		<c:out value="${errMsg}" />
-	</div>
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
-		<c:forTokens items="${errMsg}" delims="," var="err">
-			<c:out value="${err}" />
+		<c:forEach var="err" items="${errMsg}">
 			<p>
-		</c:forTokens>
+				<c:out value="${err.key}" />
+				<c:out value="${err.value}" />
+			</p>
+		</c:forEach>
+
 	</div>
+
 </body>
 </html>

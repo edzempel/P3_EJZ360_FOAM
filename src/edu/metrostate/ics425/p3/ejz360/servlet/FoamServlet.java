@@ -59,7 +59,7 @@ public class FoamServlet extends HttpServlet {
 		// get current action
 		String action = request.getParameter("action");
 //		String action = request.getRequestURL().
-		if (action.isEmpty()) {
+		if (action == null) {
 			action = "view";
 		}
 
@@ -67,8 +67,7 @@ public class FoamServlet extends HttpServlet {
 			String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
 			request.setAttribute("welcome", welcome);
 
-		}
-		if (action.equals("create-new")) {
+		} else if (action.equals("create-new")) {
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
 				String newId = request.getParameter("newId");
@@ -78,7 +77,7 @@ public class FoamServlet extends HttpServlet {
 
 				LocalDate newDob = newDobString.isBlank() ? null : LocalDate.parse(newDobString);
 				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
-				if (newDob.isBefore(LocalDate.parse("1900-01-01"))) {
+				if (newDob != null && newDob.isBefore(LocalDate.parse("1900-01-01"))) {
 					request.setAttribute("errDob", true);
 					request.setAttribute("feedbackDob", "invalid-feedback");
 					request.setAttribute("feedbackDobMessage", "The date of birth must be after 1900-01-01.");
@@ -101,8 +100,7 @@ public class FoamServlet extends HttpServlet {
 				errList.put("errMsg", String.format("%s.", ex.getMessage()));
 			} finally {
 				if (!errList.isEmpty()) {
-					String errMsgList = errList.toString();
-					request.setAttribute("errMsg", errMsgList);
+					request.setAttribute("errMsg", errList);
 					url = "/add.jsp";
 				} else {
 					url = "/index.jsp";
