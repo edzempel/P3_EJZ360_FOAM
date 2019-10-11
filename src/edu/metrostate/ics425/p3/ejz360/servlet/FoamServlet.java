@@ -59,7 +59,7 @@ public class FoamServlet extends HttpServlet {
 		// get current action
 		String action = request.getParameter("action");
 //		String action = request.getRequestURL().
-		if (action == null) {
+		if (action.isEmpty()) {
 			action = "view";
 		}
 
@@ -67,7 +67,8 @@ public class FoamServlet extends HttpServlet {
 			String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
 			request.setAttribute("welcome", welcome);
 
-		} else if (action.equals("create-new")) {
+		}
+		if (action.equals("create-new")) {
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
 				String newId = request.getParameter("newId");
@@ -77,19 +78,20 @@ public class FoamServlet extends HttpServlet {
 
 				LocalDate newDob = newDobString.isBlank() ? null : LocalDate.parse(newDobString);
 				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
-				if(newDob.isBefore(LocalDate.parse("1900-01-01"))) {
+				if (newDob.isBefore(LocalDate.parse("1900-01-01"))) {
 					request.setAttribute("errDob", true);
 					request.setAttribute("feedbackDob", "invalid-feedback");
 					request.setAttribute("feedbackDobMessage", "The date of birth must be after 1900-01-01.");
-					errList.put("errDob", String.format("%s is invalid. The date of birth must be after 1900-01-01.", newDob.toString())) ;
-				}else {
+					errList.put("errDob", String.format("%s is invalid. The date of birth must be after 1900-01-01.",
+							newDob.toString()));
+				} else {
 					request.setAttribute("feedbackDob", "valid-feedback");
 					request.setAttribute("feedbackDobMessage", "Looks good!");
 				}
 
 				boolean added = rosterDB.add(newAthlete);
 				if (!added)
-					errList.put("DupId",String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
+					errList.put("DupId", String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
 
 			} catch (RosterException e) {
 				e.printStackTrace();
@@ -98,15 +100,14 @@ public class FoamServlet extends HttpServlet {
 			} catch (Exception ex) {
 				errList.put("errMsg", String.format("%s.", ex.getMessage()));
 			} finally {
-				if(!errList.isEmpty()) {
+				if (!errList.isEmpty()) {
 					String errMsgList = errList.toString();
 					request.setAttribute("errMsg", errMsgList);
 					url = "/add.jsp";
 				} else {
 					url = "/index.jsp";
 				}
-				
-				
+
 			}
 		} else {
 			request.setAttribute("errMsg", "Invalid action");
