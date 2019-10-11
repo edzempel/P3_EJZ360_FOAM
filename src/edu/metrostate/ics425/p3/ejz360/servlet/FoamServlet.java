@@ -58,15 +58,16 @@ public class FoamServlet extends HttpServlet {
 
 		// get current action
 		String action = request.getParameter("action");
+//		String action = request.getRequestURL().
 		if (action == null) {
-			action = "add";
+			action = "view";
 		}
 
 		if (action.equals("view")) {
 			String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
 			request.setAttribute("welcome", welcome);
 
-		} else if (action.equals("add")) {
+		} else if (action.equals("create-new")) {
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
 				String newId = request.getParameter("newId");
@@ -100,7 +101,9 @@ public class FoamServlet extends HttpServlet {
 				if(!errList.isEmpty()) {
 					String errMsgList = errList.toString();
 					request.setAttribute("errMsg", errMsgList);
-					url = "add.jsp";
+					url = "/add.jsp";
+				} else {
+					url = "/index.jsp";
 				}
 				
 				

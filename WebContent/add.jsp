@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<form class="form" name="form-new" id="form-new" action="add"
+	<form class="form" name="form-new" id="form-new" action="add.jsp"
 		method="get">
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
@@ -45,6 +45,9 @@
 				min="1900-01-01" max="2020-07-25">
 			<div class="${feedbackDob}">${feedbackDobMessage}</div>
 		</div>
+		
+		<inpput type="hidden" name="action" value="create-new">
+		
 
 		<input type="submit" value="Add athlete" id="submit-new" />
 	</form>
