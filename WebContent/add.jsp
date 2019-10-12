@@ -46,20 +46,22 @@
 		<div>
 			<input type="hidden" name="action" value="create-new">
 		</div>
+		<div class="${!empty errMsg ? 'alert alert-danger' : '' }"
+			role="alert">
+			<c:forEach var="err" items="${errMsg}">
+				<p>
+					<span><c:out value="${err.key}" /> : </span>
+					<c:out value="${err.value}" />
+				</p>
+			</c:forEach>
+
+		</div>
 		<div>
 			<input type="submit" value="Add athlete" id="submit-new" />
 		</div>
 
 	</form>
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
-		<c:forEach var="err" items="${errMsg}">
-			<p>
-				<c:out value="${err.key}" />
-				<c:out value="${err.value}" />
-			</p>
-		</c:forEach>
 
-	</div>
 
 </body>
 </html>
