@@ -38,10 +38,12 @@
 		</div>
 		<div class="form-group">
 			<label for="form-new-dob">Date of birth</label> <input
-				class="form-control ${empty errDob ? 'is-valid' : 'is-invalid'}"
+				class="form-control ${errDob == null ? null: errDob ? 'is-invalid' : 'is-valid'}"
 				type="date" id="form-new-dob" name="newDob" value="${param.newDob}"
 				min="1900-01-01" max="2020-07-25">
-			<div class="${feedbackDob}">${feedbackDobMessage}</div>
+			<div class="${!errDob ? 'valid-feedback' : 'invalid-feedback'}">${feedbackDobMessage}</div>
+			<div>ErrDob: ${errDob}</div>
+			<div>ErrDob is note true: ${errDob != true}</div>
 		</div>
 		<div>
 			<input type="hidden" name="action" value="create-new">

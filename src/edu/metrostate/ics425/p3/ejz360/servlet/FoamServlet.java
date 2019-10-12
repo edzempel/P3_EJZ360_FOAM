@@ -2,6 +2,7 @@ package edu.metrostate.ics425.p3.ejz360.servlet;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -55,42 +56,68 @@ public class FoamServlet extends HttpServlet {
 		var sc = getServletContext();
 		String url = "index.jsp";
 		Roster rosterDB = (Roster) sc.getAttribute("rosterDB");
+		String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
+		request.setAttribute("welcome", welcome);
 
 		// get current action
 		String action = request.getParameter("action");
-//		String action = request.getRequestURL().
 		if (action == null) {
 			action = "view";
 		}
 
 		if (action.equals("view")) {
-			String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
-			request.setAttribute("welcome", welcome);
 
+			// Create new Athlete
 		} else if (action.equals("create-new")) {
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
 				String newId = request.getParameter("newId");
 				String newLast = request.getParameter("newLast");
 				String newFirst = request.getParameter("newFirst");
-				String newDobString = request.getParameter("newDob");
 
-				LocalDate newDob = newDobString.isBlank() ? null : LocalDate.parse(newDobString);
-				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
-				if (newDob != null && newDob.isBefore(LocalDate.parse("1900-01-01"))) {
-					request.setAttribute("errDob", true);
-					request.setAttribute("feedbackDob", "invalid-feedback");
-					request.setAttribute("feedbackDobMessage", "The date of birth must be after 1900-01-01.");
-					errList.put("errDob", String.format("%s is invalid. The date of birth must be after 1900-01-01.",
-							newDob.toString()));
+				String newDobString = request.getParameter("newDob");
+				String errDob = null;
+				String feedbackDobMessage = null;
+
+				LocalDate newDob = null;
+				if (newDobString.isBlank()) {
+					newDob = null;
 				} else {
-					request.setAttribute("feedbackDob", "valid-feedback");
-					request.setAttribute("feedbackDobMessage", "Looks good!");
+					try {
+						newDob = LocalDate.parse(newDobString);
+						if (newDob != null && newDob.isBefore(LocalDate.parse("1900-01-01"))) {
+							errDob = "true";
+							feedbackDobMessage = "The date of birth must be after 1900-01-01.";
+							errList.put("errDob", String.format("%s is invalid. The date of birth must be after 1900-01-01.",
+									newDob.toString()));
+						} else if (newDob == null) {
+							errDob = null;
+						} else {
+							errDob = "false";
+							feedbackDobMessage = "Looks good!";
+						}
+					} catch (DateTimeParseException dtpex) {
+						errList.put("Date err", String.format("Invalid date: %s. ", request.getParameter("newDob"))
+								+ dtpex.getMessage());
+						errDob = "true";
+						feedbackDobMessage = String.format("'%s' is an invalid date.", newDobString);
+					}
 				}
 
+				
+
+				// create new athlete
+				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
+				// add athlete to roster
 				boolean added = rosterDB.add(newAthlete);
+
+				// add duplicate ID
 				if (!added)
 					errList.put("DupId", String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
+
+				// send all other messages to the view
+				request.setAttribute("errDob", errDob);
+				request.setAttribute("feedbackDobMessage", feedbackDobMessage);
 
 			} catch (RosterException e) {
 				e.printStackTrace();
@@ -101,6 +128,7 @@ public class FoamServlet extends HttpServlet {
 			} finally {
 				if (!errList.isEmpty()) {
 					request.setAttribute("errMsg", errList);
+
 					url = "/add.jsp";
 				} else {
 					url = "/index.jsp";
