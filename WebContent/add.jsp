@@ -42,8 +42,6 @@
 				type="date" id="form-new-dob" name="newDob" value="${param.newDob}"
 				min="1900-01-01" max="2020-07-25">
 			<div class="${!errDob ? 'valid-feedback' : 'invalid-feedback'}">${feedbackDobMessage}</div>
-			<div>ErrDob: ${errDob}</div>
-			<div>ErrDob is note true: ${errDob != true}</div>
 		</div>
 		<div>
 			<input type="hidden" name="action" value="create-new">
