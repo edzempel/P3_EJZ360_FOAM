@@ -96,6 +96,8 @@ public class FoamServlet extends HttpServlet {
 					errLast = "true";
 					feedbackLastMessage = String.format("Required field");
 					errList.put("Last name missing", "required field");
+				}else {
+					errLast = "false";
 				}
 
 				String newFirst = request.getParameter("newFirst");
@@ -105,6 +107,8 @@ public class FoamServlet extends HttpServlet {
 					errFirst = "true";
 					feedbackFirstMessage = String.format("Required field");
 					errList.put("First name missing", "required field");
+				} else {
+					errFirst = "false";
 				}
 
 				String newDobString = request.getParameter("newDob");
@@ -159,8 +163,8 @@ public class FoamServlet extends HttpServlet {
 				request.setAttribute("feedbackIdMessage", feedbackIdMessage);
 				request.setAttribute("errFirst", errFirst);
 				request.setAttribute("feedbackFirstMessage", feedbackFirstMessage);
-				request.setAttribute("errDob", errLast);
-				request.setAttribute("feedbackFirstMessage", feedbackLastMessage);
+				request.setAttribute("errLast", errLast);
+				request.setAttribute("feedbackLastMessage", feedbackLastMessage);
 				request.setAttribute("errDob", errDob);
 				request.setAttribute("feedbackDobMessage", feedbackDobMessage);
 
