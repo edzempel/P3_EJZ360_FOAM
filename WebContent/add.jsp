@@ -5,8 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<!-- <meta charset="utf-8"> -->
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -30,18 +29,16 @@
 			<label for="form-new-lastName">Last name</label> <input
 				id="form-new-lastName"
 				class="form-control ${errLast == null ? null: errLast ? 'is-invalid' : 'is-valid'}"
-				name="newLast" placeholder="last name" pattern=".+"
-				required type="text"
-				value="<c:out value='${param.newLast}' />" />
+				name="newLast" placeholder="last name" pattern=".+" required
+				type="text" value="<c:out value='${param.newLast}' />" />
 			<div class="${!errLast ? 'valid-feedback' : 'invalid-feedback'}">${feedbackLastMessage}</div>
 		</div>
 		<div class="form-group">
 			<label for="form-new-firstName">First name</label><input
 				id="form-new-firstName"
 				class="form-control ${errFirst == null ? null: errFirst ? 'is-invalid' : 'is-valid'}"
-				name="newFirst" placeholder="fist name" pattern=".+"
-				required type="text"
-				value="<c:out value='${param.newFirst}' />" />
+				name="newFirst" placeholder="fist name" pattern=".+" required
+				type="text" value="<c:out value='${param.newFirst}' />" />
 			<div class="${!errFirst ? 'valid-feedback' : 'invalid-feedback'}">${feedbackFirstMessage}</div>
 		</div>
 		<div class="form-group">
