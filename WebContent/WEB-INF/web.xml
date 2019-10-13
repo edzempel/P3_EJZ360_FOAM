@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>P3_EJZ360_FOAM</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  
-  <context-param>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>P3_EJZ360_FOAM</display-name>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error-404.jsp</location>
+	</error-page>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<context-param>
 		<param-name>filePath</param-name>
 		<param-value>WEB-INF/Rosters/roster2.txt</param-value>
 	</context-param>
-  
-  <servlet>
-  	<servlet-name>FoamServlet</servlet-name>
-  	<servlet-class>edu.metrostate.ics425.p3.ejz360.servlet.FoamServlet</servlet-class>
-  	<init-param>
-  		<param-name>filePath</param-name>
-  		<param-value>WEB-INF/Rosters/roster.txt</param-value>
-  	</init-param>
-  </servlet>
+
+	<servlet>
+		<servlet-name>FoamServlet</servlet-name>
+		<servlet-class>edu.metrostate.ics425.p3.ejz360.servlet.FoamServlet</servlet-class>
+		<init-param>
+			<param-name>filePath</param-name>
+			<param-value>WEB-INF/Rosters/roster.txt</param-value>
+		</init-param>
+	</servlet>
 </web-app>
