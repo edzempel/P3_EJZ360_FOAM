@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -30,7 +30,7 @@
 			<label for="form-new-lastName">Last name</label> <input
 				id="form-new-lastName"
 				class="form-control ${errLast == null ? null: errLast ? 'is-invalid' : 'is-valid'}"
-				name="newLast" placeholder="last name" pattern="[\w ]+"
+				name="newLast" placeholder="last name" pattern=".+"
 				required type="text"
 				value="<c:out value='${param.newLast}' />" />
 			<div class="${!errLast ? 'valid-feedback' : 'invalid-feedback'}">${feedbackLastMessage}</div>
@@ -39,7 +39,7 @@
 			<label for="form-new-firstName">First name</label><input
 				id="form-new-firstName"
 				class="form-control ${errFirst == null ? null: errFirst ? 'is-invalid' : 'is-valid'}"
-				name="newFirst" placeholder="fist name" pattern="[\w ]+"
+				name="newFirst" placeholder="fist name" pattern=".+"
 				required type="text"
 				value="<c:out value='${param.newFirst}' />" />
 			<div class="${!errFirst ? 'valid-feedback' : 'invalid-feedback'}">${feedbackFirstMessage}</div>
