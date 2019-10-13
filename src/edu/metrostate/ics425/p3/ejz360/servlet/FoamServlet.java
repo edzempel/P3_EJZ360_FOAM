@@ -69,11 +69,43 @@ public class FoamServlet extends HttpServlet {
 
 			// Create new Athlete
 		} else if (action.equals("create-new")) {
+			boolean readyToAdd = false;
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
 				String newId = request.getParameter("newId");
+				String errId = null;
+				String feedbackIdMessage = null;
+				if(newId.isBlank()) {
+					errId = "true";
+					feedbackIdMessage = String.format("Required field");
+					errList.put("National Id missing", "required field");
+				}
+				else if(rosterDB.isOnRoster(newId)) {
+					errId = "true";
+					feedbackIdMessage = String.format("'%s' is already in roster", newId);
+					errList.put("DupId",
+							String.format("%s is a duplicate id.", newId));
+				} else {
+					errId = "false";
+				}
+
 				String newLast = request.getParameter("newLast");
+				String errLast = null;
+				String feedbackLastMessage = null;
+				if(newLast.isBlank()) {
+					errLast = "true";
+					feedbackLastMessage = String.format("Required field");
+					errList.put("Last name missing", "required field");
+				}
+
 				String newFirst = request.getParameter("newFirst");
+				String errFirst = null;
+				String feedbackFirstMessage = null;
+				if(newFirst.isBlank()) {
+					errFirst = "true";
+					feedbackFirstMessage = String.format("Required field");
+					errList.put("First name missing", "required field");
+				}
 
 				String newDobString = request.getParameter("newDob");
 				String errDob = null;
@@ -88,8 +120,8 @@ public class FoamServlet extends HttpServlet {
 						if (newDob != null && newDob.isBefore(LocalDate.parse("1900-01-01"))) {
 							errDob = "true";
 							feedbackDobMessage = "The date of birth must be after 1900-01-01.";
-							errList.put("Date of birth out of range",
-									String.format("'%s' is out of range. The date of birth must be after 1900-01-01.", newDobString));
+							errList.put("Date of birth out of range", String.format(
+									"'%s' is out of range. The date of birth must be after 1900-01-01.", newDobString));
 						} else if (newDob == null) {
 							errDob = null;
 						} else {
@@ -98,23 +130,37 @@ public class FoamServlet extends HttpServlet {
 						}
 					} catch (DateTimeParseException dtpex) {
 						errDob = "true";
+						feedbackDobMessage = String.format("'%s' is an invalid date.", newDobString);
 						errList.put("Date format error",
 								String.format("'%s' must be in yyyy-MM-dd format.", request.getParameter("newDob")));
-						
-						feedbackDobMessage = String.format("'%s' is an invalid date.", newDobString);
+					}
+				}
+				
+				readyToAdd = errList.isEmpty();
+				if (readyToAdd) {
+					// create new athlete
+					AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
+					// add athlete to roster
+					boolean added = rosterDB.add(newAthlete);
+
+					// add duplicate ID
+					if (!added) {
+						errId = "true";
+						feedbackIdMessage = String.format("%s is already in roster", newId);
+						errList.put("DupId",
+								String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
+					} else {
+						errId = "false";
 					}
 				}
 
-				// create new athlete
-				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
-				// add athlete to roster
-				boolean added = rosterDB.add(newAthlete);
-
-				// add duplicate ID
-				if (!added)
-					errList.put("DupId", String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
-
 				// send all other messages to the view
+				request.setAttribute("errId", errId);
+				request.setAttribute("feedbackIdMessage", feedbackIdMessage);
+				request.setAttribute("errFirst", errFirst);
+				request.setAttribute("feedbackFirstMessage", feedbackFirstMessage);
+				request.setAttribute("errDob", errLast);
+				request.setAttribute("feedbackFirstMessage", feedbackLastMessage);
 				request.setAttribute("errDob", errDob);
 				request.setAttribute("feedbackDobMessage", feedbackDobMessage);
 
