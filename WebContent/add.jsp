@@ -22,24 +22,24 @@
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
 				name="newId" placeholder="national ID" pattern="[A-Za-z0-9]+"
-				required="true" type="text" value="${param.newId}" />
+				required="true" type="text" value="<c:out value='${param.newId}'/>" />
 		</div>
 		<div class="form-group">
 			<label for="form-new-lastName">Last name</label> <input
 				id="form-new-lastName" name="newLast" placeholder="last name"
 				pattern="[A-Za-z]+" required="true" type="text"
-				value="${param.newLast}" />
+				value="<c:out value='${param.newLast}' />" />
 		</div>
 		<div class="form-group">
 			<label for="form-new-firstName">First name <input
 				id="form-new-firstName" name="newFirst" placeholder="fist name"
 				pattern="[A-Za-z]+" required="true" type="text"
-				value="${param.newFirst}" /></label>
+				value="<c:out value='${param.newFirst}' />" /></label>
 		</div>
 		<div class="form-group">
 			<label for="form-new-dob">Date of birth</label> <input
 				class="form-control ${errDob == null ? null: errDob ? 'is-invalid' : 'is-valid'}"
-				type="date" id="form-new-dob" name="newDob" value="${param.newDob}"
+				type="date" id="form-new-dob" name="newDob" value="<c:out value='${param.newDob}'/>"
 				min="1900-01-01" max="2020-07-25">
 			<div class="${!errDob ? 'valid-feedback' : 'invalid-feedback'}">${feedbackDobMessage}</div>
 		</div>
