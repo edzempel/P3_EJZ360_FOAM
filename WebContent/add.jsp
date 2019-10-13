@@ -63,7 +63,9 @@
 
 		</div>
 		<div>
-			<input type="submit" value="Add athlete" id="submit-new" />
+			<button class="btn btn-secondary" type="reset">Clear form</button>
+			<a href="FoamServlet"><button class="btn btn-danger" type="button">Cancel</button></a>
+			<input class="btn btn-primary" type="submit" value="Add athlete" id="submit-new" />
 		</div>
 
 	</form>
