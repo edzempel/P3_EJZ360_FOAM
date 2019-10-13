@@ -24,22 +24,21 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="FoamServlet">Home
-						<span class="sr-only">(current)</span>
+				<li class="nav-item active"><a class="nav-link"
+					href="FoamServlet">Home <span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="add.jsp">Add athletes</a>
-				</li>
+				<li class="nav-item"><a class="nav-link" href="add.jsp">Add
+						athletes</a></li>
 				<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
 			</ul>
 		</div>
 	</nav>
-	<h2>
-		FOAMS athlete roster
-	</h2>
+	<h2>FOAMS athlete roster</h2>
 	<p>${welcome}</p>
 	<table class="table">
 		<thead>
 			<tr>
+				<th></th>
 				<th>National ID</th>
 				<th>Last Name</th>
 				<th>First Name</th>
@@ -51,6 +50,7 @@
 		<tbody>
 			<c:forEach var="athlete" items="${roster}">
 				<tr>
+					<td>${!athlete.eligible ? '<img src="img/ineligible.png">': "" }</td>
 					<td><c:out value="${athlete.nationalID}" /></td>
 					<td><c:out value="${athlete.lastName}" /></td>
 					<td><c:out value="${athlete.firstName}" /></td>
