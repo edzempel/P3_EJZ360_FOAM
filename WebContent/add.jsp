@@ -21,8 +21,10 @@
 		method="get">
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
+			class="form-control ${errId == null ? null: errId ? 'is-invalid' : 'is-valid'}"
 				name="newId" placeholder="national ID" pattern="[A-Za-z0-9]+"
 				required="true" type="text" value="<c:out value='${param.newId}'/>" />
+				<div class="${!errId ? 'valid-feedback' : 'invalid-feedback'}">${feedbackIdMessage}</div>
 		</div>
 		<div class="form-group">
 			<label for="form-new-lastName">Last name</label> <input
