@@ -37,7 +37,12 @@ public class FoamServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/error-404.jsp").forward(request, response);
+		if (request.getQueryString() != null) {
+			request.getRequestDispatcher("/error-404.jsp").forward(request, response);
+		} else {
+			processRequest(request, response);
+		}
+
 	}
 
 	/**
@@ -75,16 +80,14 @@ public class FoamServlet extends HttpServlet {
 				String newId = request.getParameter("newId").trim();
 				String errId = null;
 				String feedbackIdMessage = null;
-				if(newId.isBlank()) {
+				if (newId.isBlank()) {
 					errId = "true";
 					feedbackIdMessage = String.format("Required field");
 					errList.put("National Id missing", "required field");
-				}
-				else if(rosterDB.isOnRoster(newId)) {
+				} else if (rosterDB.isOnRoster(newId)) {
 					errId = "true";
 					feedbackIdMessage = String.format("'%s' is already in roster", newId);
-					errList.put("DupId",
-							String.format("%s is a duplicate id.", newId));
+					errList.put("DupId", String.format("%s is a duplicate id.", newId));
 				} else {
 					errId = "false";
 				}
@@ -92,18 +95,18 @@ public class FoamServlet extends HttpServlet {
 				String newLast = request.getParameter("newLast").trim();
 				String errLast = null;
 				String feedbackLastMessage = null;
-				if(newLast.isBlank()) {
+				if (newLast.isBlank()) {
 					errLast = "true";
 					feedbackLastMessage = String.format("Required field");
 					errList.put("Last name missing", "required field");
-				}else {
+				} else {
 					errLast = "false";
 				}
 
 				String newFirst = request.getParameter("newFirst").trim();
 				String errFirst = null;
 				String feedbackFirstMessage = null;
-				if(newFirst.isBlank()) {
+				if (newFirst.isBlank()) {
 					errFirst = "true";
 					feedbackFirstMessage = String.format("Required field");
 					errList.put("First name missing", "required field");
@@ -139,7 +142,7 @@ public class FoamServlet extends HttpServlet {
 								String.format("'%s' must be in yyyy-MM-dd format.", request.getParameter("newDob")));
 					}
 				}
-				
+
 				readyToAdd = errList.isEmpty();
 				if (readyToAdd) {
 					// create new athlete
@@ -147,7 +150,8 @@ public class FoamServlet extends HttpServlet {
 					// add athlete to roster
 					boolean added = rosterDB.add(newAthlete);
 
-					// one last check for duplicate id in case it was added while waiting for user input
+					// one last check for duplicate id in case it was added while waiting for user
+					// input
 					if (!added) {
 						errId = "true";
 						feedbackIdMessage = String.format("%s is already in roster", newId);
