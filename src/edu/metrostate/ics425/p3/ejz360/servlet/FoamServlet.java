@@ -72,7 +72,7 @@ public class FoamServlet extends HttpServlet {
 			boolean readyToAdd = false;
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
-				String newId = request.getParameter("newId");
+				String newId = request.getParameter("newId").trim();
 				String errId = null;
 				String feedbackIdMessage = null;
 				if(newId.isBlank()) {
@@ -89,7 +89,7 @@ public class FoamServlet extends HttpServlet {
 					errId = "false";
 				}
 
-				String newLast = request.getParameter("newLast");
+				String newLast = request.getParameter("newLast").trim();
 				String errLast = null;
 				String feedbackLastMessage = null;
 				if(newLast.isBlank()) {
@@ -100,7 +100,7 @@ public class FoamServlet extends HttpServlet {
 					errLast = "false";
 				}
 
-				String newFirst = request.getParameter("newFirst");
+				String newFirst = request.getParameter("newFirst").trim();
 				String errFirst = null;
 				String feedbackFirstMessage = null;
 				if(newFirst.isBlank()) {
@@ -147,7 +147,7 @@ public class FoamServlet extends HttpServlet {
 					// add athlete to roster
 					boolean added = rosterDB.add(newAthlete);
 
-					// add duplicate ID
+					// one last check for duplicate id in case it was added while waiting for user input
 					if (!added) {
 						errId = "true";
 						feedbackIdMessage = String.format("%s is already in roster", newId);
