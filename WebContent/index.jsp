@@ -5,8 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<!-- <meta charset="utf-8"> -->
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -16,7 +15,10 @@
 <title>P3 EJZ360 FOAMS</title>
 </head>
 <body>
-	<h1><a href="/P3_EJZ360_FOAM/">Welcome to FOAMS!</a></h1>
+
+	<h1>
+		<a href="/P3_EJZ360_FOAM/">Welcome to FOAMS!</a>
+	</h1>
 	<p>${welcome}</p>
 	<table class="table">
 		<thead>
@@ -35,20 +37,25 @@
 					<td><c:out value="${athlete.nationalID}" /></td>
 					<td><c:out value="${athlete.lastName}" /></td>
 					<td><c:out value="${athlete.firstName}" /></td>
-					<td ${empty athlete.dateOfBirth ? "class='table-danger'" : ''}><c:out value="${athlete.dateOfBirth}" /></td>
-					<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out value="${athlete.age < 0 ? '' : athlete.age}" /></td>
+					<td ${empty athlete.dateOfBirth ? "class='table-danger'" : ''}><c:out
+							value="${athlete.dateOfBirth}" /></td>
+					<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out
+							value="${athlete.age < 0 ? '' : athlete.age}" /></td>
 					<td><a href='edit?id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
-					<td><a href='delete?id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
+					<td><a
+						href='delete?id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert"><c:out value="${errMsg}" /></div>
+	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
+		<c:out value="${errMsg}" />
+	</div>
 
 	<form name="form-add" id="form-add" action="add.jsp" method="post">
 		<input type="submit" value="Add athlete" id="submit-add" />
-		
+
 	</form>
 
 </body>

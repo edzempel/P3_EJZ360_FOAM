@@ -15,7 +15,11 @@
 <title>P3 EJZ360 FOAMS: add athlete</title>
 </head>
 <body>
-
+	<h1>
+		<a href="/P3_EJZ360_FOAM/">Welcome to FOAMS!</a>
+	</h1>
+	<h2>Add an athlete</h2>
+	
 	<form class="form" name="form-new" id="form-new" action="add"
 		method="get">
 		<div class="form-group">
@@ -64,8 +68,9 @@
 		</div>
 		<div>
 			<button class="btn btn-secondary" type="reset">Clear form</button>
-			<a href="FoamServlet"><button class="btn btn-danger" type="button">Cancel</button></a>
-			<input class="btn btn-primary" type="submit" value="Add athlete" id="submit-new" />
+			<a href="FoamServlet"><button class="btn btn-danger"
+					type="button">Cancel</button></a> <input class="btn btn-primary"
+				type="submit" value="Add athlete" id="submit-new" />
 		</div>
 
 	</form>
