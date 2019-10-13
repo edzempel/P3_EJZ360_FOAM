@@ -15,10 +15,27 @@
 <title>P3 EJZ360 FOAMS</title>
 </head>
 <body>
-
-	<h1>
-		<a href="/P3_EJZ360_FOAM/">Welcome to FOAMS!</a>
-	</h1>
+	<nav class="navbar navbar-expand navbar-dark bg-dark">
+		<a class="navbar-brand" href="FoamServlet">FOAMS</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="FoamServlet">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="add.jsp">Add athletes</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
+			</ul>
+		</div>
+	</nav>
+	<h2>
+		FOAMS athlete roster
+	</h2>
 	<p>${welcome}</p>
 	<table class="table">
 		<thead>

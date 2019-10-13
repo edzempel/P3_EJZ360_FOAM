@@ -15,11 +15,26 @@
 <title>P3 EJZ360 FOAMS: add athlete</title>
 </head>
 <body>
-	<h1>
-		<a href="/P3_EJZ360_FOAM/">Welcome to FOAMS!</a>
-	</h1>
+	<nav class="navbar navbar-expand navbar-dark bg-dark">
+		<a class="navbar-brand" href="FoamServlet">FOAMS</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="FoamServlet">Home
+				</a></li>
+				<li class="nav-item active"><a class="nav-link" href="add.jsp">Add
+						athletes</a><span class="sr-only">(current)</span></li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
+			</ul>
+		</div>
+	</nav>
+
 	<h2>Add an athlete</h2>
-	
+
 	<form class="form" name="form-new" id="form-new" action="add"
 		method="get">
 		<div class="form-group">
