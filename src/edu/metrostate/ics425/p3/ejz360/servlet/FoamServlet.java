@@ -88,8 +88,8 @@ public class FoamServlet extends HttpServlet {
 						if (newDob != null && newDob.isBefore(LocalDate.parse("1900-01-01"))) {
 							errDob = "true";
 							feedbackDobMessage = "The date of birth must be after 1900-01-01.";
-							errList.put("errDob", String.format("%s is invalid. The date of birth must be after 1900-01-01.",
-									newDob.toString()));
+							errList.put("Date of birth out of range",
+									String.format("'%s' is out of range. The date of birth must be after 1900-01-01.", newDobString));
 						} else if (newDob == null) {
 							errDob = null;
 						} else {
@@ -97,14 +97,13 @@ public class FoamServlet extends HttpServlet {
 							feedbackDobMessage = "Looks good!";
 						}
 					} catch (DateTimeParseException dtpex) {
-						errList.put("Date err", String.format("Invalid date: %s. ", request.getParameter("newDob"))
-								+ dtpex.getMessage());
 						errDob = "true";
+						errList.put("Date format error",
+								String.format("'%s' must be in yyyy-MM-dd format.", request.getParameter("newDob")));
+						
 						feedbackDobMessage = String.format("'%s' is an invalid date.", newDobString);
 					}
 				}
-
-				
 
 				// create new athlete
 				AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);

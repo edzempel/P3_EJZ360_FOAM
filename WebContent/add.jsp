@@ -50,7 +50,7 @@
 			role="alert">
 			<c:forEach var="err" items="${errMsg}">
 				<p>
-					<span><c:out value="${err.key}" /> : </span>
+					<span><c:out value="${err.key}" /> :</span> 
 					<c:out value="${err.value}" />
 				</p>
 			</c:forEach>
