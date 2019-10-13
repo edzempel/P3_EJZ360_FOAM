@@ -37,7 +37,7 @@ public class FoamServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		processRequest(request, response);
+		request.getRequestDispatcher("/error-404.jsp").forward(request, response);
 	}
 
 	/**

@@ -36,7 +36,7 @@
 	<h2>Add an athlete</h2>
 
 	<form class="form" name="form-new" id="form-new" action="add"
-		method="get">
+		method="post">
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
 				class="form-control ${errId == null ? null: errId ? 'is-invalid' : 'is-valid'}"
