@@ -22,16 +22,16 @@
 		<div class="form-group">
 			<label for="nationalId">National ID</label> <input id="nationalId"
 				class="form-control ${errId == null ? null: errId ? 'is-invalid' : 'is-valid'}"
-				name="newId" placeholder="national ID" pattern="[A-Za-z0-9]+"
-				required="true" type="text" value="<c:out value='${param.newId}'/>" />
+				name="newId" placeholder="national ID" pattern="[A-Za-z0-9-.]+"
+				required type="text" value="<c:out value='${param.newId}'/>" />
 			<div class="${!errId ? 'valid-feedback' : 'invalid-feedback'}">${feedbackIdMessage}</div>
 		</div>
 		<div class="form-group">
 			<label for="form-new-lastName">Last name</label> <input
 				id="form-new-lastName"
 				class="form-control ${errLast == null ? null: errLast ? 'is-invalid' : 'is-valid'}"
-				name="newLast" placeholder="last name" pattern="[A-Za-z]+"
-				required="true" type="text"
+				name="newLast" placeholder="last name" pattern="[\w ]+"
+				required type="text"
 				value="<c:out value='${param.newLast}' />" />
 			<div class="${!errLast ? 'valid-feedback' : 'invalid-feedback'}">${feedbackLastMessage}</div>
 		</div>
@@ -39,8 +39,8 @@
 			<label for="form-new-firstName">First name</label><input
 				id="form-new-firstName"
 				class="form-control ${errFirst == null ? null: errFirst ? 'is-invalid' : 'is-valid'}"
-				name="newFirst" placeholder="fist name" pattern="[A-Za-z]+"
-				required="true" type="text"
+				name="newFirst" placeholder="fist name" pattern="[\w ]+"
+				required type="text"
 				value="<c:out value='${param.newFirst}' />" />
 			<div class="${!errFirst ? 'valid-feedback' : 'invalid-feedback'}">${feedbackFirstMessage}</div>
 		</div>
