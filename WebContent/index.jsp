@@ -35,8 +35,8 @@
 	</nav>
 	<h2>FOAMS athlete roster</h2>
 	<p>${welcome}</p>
-	<table class="table">
-		<thead>
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="thead-primary">
 			<tr>
 				<th></th>
 				<th>National ID</th>
@@ -71,7 +71,7 @@
 	</div>
 
 	<form name="form-add" id="form-add" action="add.jsp" method="post">
-		<input type="submit" value="Add athlete" id="submit-add" />
+		<input class="btn btn-primary" type="submit" value="Add athlete" id="submit-add" />
 
 	</form>
 
