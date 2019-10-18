@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.util.Random;
+//import java.util.Random;
 
 import java.util.logging.Logger;
 import org.junit.*;
@@ -16,10 +16,10 @@ import edu.metrostate.ics425.p3.ejz360.model.AthleteBean;
 
 public class AthleteBeanTest {
 
+	@SuppressWarnings("unused")
 	private static final long SEED = 20190905001L;
-	private static final Random RAND = new Random(SEED);
-
-	private static final double TOLERANCE = 0.0001;
+//	private static final Random RAND = new Random(SEED);
+//	private static final double TOLERANCE = 0.0001;
 	private AthleteBean ab;
 
 	@Before // running jUnit 4, jUnit5 uses @BeforeEach
