@@ -33,47 +33,54 @@
 			</ul>
 		</div>
 	</nav>
-	<h2>FOAMS athlete roster</h2>
-	<p>${welcome}</p>
-	<table class="table table-bordered table-striped table-hover">
-		<thead class="thead-primary">
-			<tr>
-				<th></th>
-				<th>National ID</th>
-				<th>Last Name</th>
-				<th>First Name</th>
-				<th>Date of Birth</th>
-				<th>Age</th>
-				<th colspan="2">Options</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="athlete" items="${roster}">
+
+	<div class="container">
+
+		<h2>FOAMS athlete roster</h2>
+		<p>${welcome}</p>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="thead-primary">
 				<tr>
-					<td>${!athlete.eligible ? '<img src="img/ineligible.png">': "" }</td>
-					<td><c:out value="${athlete.nationalID}" /></td>
-					<td><c:out value="${athlete.lastName}" /></td>
-					<td><c:out value="${athlete.firstName}" /></td>
-					<td ${empty athlete.dateOfBirth ? "class='table-danger'" : ''}><c:out
-							value="${athlete.dateOfBirth}" /></td>
-					<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out
-							value="${athlete.age < 0 ? '' : athlete.age}" /></td>
-					<td><a href='edit?id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
-					<td><a
-						href='delete?id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
+					<th>Eligible</th>
+					<th>National ID</th>
+					<th>Last Name</th>
+					<th>First Name</th>
+					<th>Date of Birth</th>
+					<th>Age</th>
+					<th colspan="2">Options</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<c:forEach var="athlete" items="${roster}">
+					<tr>
+						<td>${!athlete.eligible ? '<img src="img/ineligible.png" alt="ineligible">': "" }</td>
+						<td><c:out value="${athlete.nationalID}" /></td>
+						<td><c:out value="${athlete.lastName}" /></td>
+						<td><c:out value="${athlete.firstName}" /></td>
+						<td ${empty athlete.dateOfBirth ? "class='table-danger'" : ''}><c:out
+								value="${athlete.dateOfBirth}" /></td>
+						<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out
+								value="${athlete.age < 0 ? '' : athlete.age}" /></td>
+						<td><a href='edit?id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
+						<td><a
+							href='delete?id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 
-	<div class="${!empty errMsg ? 'alert alert-danger' : '' }" role="alert">
-		<c:out value="${errMsg}" />
+		<div class="${!empty errMsg ? 'alert alert-danger' : '' }"
+			role="alert">
+			<c:out value="${errMsg}" />
+		</div>
+
+		<form name="form-add" id="form-add" action="add.jsp" method="post">
+			<input class="btn btn-primary" type="submit" value="addAthlete"
+				id="submit-add" />
+
+		</form>
+
 	</div>
-
-	<form name="form-add" id="form-add" action="add.jsp" method="post">
-		<input class="btn btn-primary" type="submit" value="Add athlete" id="submit-add" />
-
-	</form>
 
 </body>
 </html>
