@@ -17,3 +17,10 @@ span {
 	font-weight: bold;
 	text-decoration: underline;
 }
+
+.thead-primary {
+	color: #fff;
+	background-color: #0064d0;
+/* 	background-color: #007bff; */
+	border-color: #454d55;
+}
