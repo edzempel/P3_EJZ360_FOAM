@@ -61,7 +61,7 @@
 								value="${athlete.dateOfBirth}" /></td>
 						<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out
 								value="${athlete.age < 0 ? '' : athlete.age}" /></td>
-						<td><a href='edit?action=edit&id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
+						<td><a href='edit?action=edit-form&id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
 						<td><a
 							href='delete?action=confirmDelete&id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
 					</tr>
