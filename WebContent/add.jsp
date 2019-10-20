@@ -72,6 +72,7 @@
 			</div>
 			<div>
 				<input type="hidden" name="action" value="create-new">
+				<input type="hidden" name="mode" value="add">
 			</div>
 			<div class="${!empty errMsg ? 'alert alert-danger' : '' }"
 				role="alert">
