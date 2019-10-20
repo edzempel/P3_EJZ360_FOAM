@@ -42,7 +42,7 @@
 			
 			<div>
 				<input type="hidden" name="action" value="create-new">
-				<input type="hidden" name="mode" value="edit">
+				<input type="hidden" name="mode" value="${addEnabled == true ? 'add' : 'edit'}">
 			</div>
 			
 			<div class="form-group">
@@ -90,7 +90,10 @@
 			<div>
 				<a href="FoamServlet"><button class="btn btn-danger"
 						type="button">Cancel</button></a> <input class="btn btn-primary"
-					type="submit" value="Update athlete" id="submit-update" />
+					type="${updateDisabled == true ? 'button' : 'submit'}" ${updateDisabled == true ? "disabled" : ""} value="Update athlete" id="submit-update" />
+					<input class="btn btn-primary"
+					type="${addEnabled == true ? 'submit' : 'hidden'}" value="Add athlete" id="submit-new" />
+					
 			</div>
 
 		</form>

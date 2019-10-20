@@ -176,6 +176,7 @@ public class FoamServlet extends HttpServlet {
 			boolean readyToAdd = false;
 
 			try {
+				// validate national id
 				String newId = request.getParameter("newId");
 				newId = newId != null ? newId.trim() : null;
 				String errId = null;
@@ -184,7 +185,9 @@ public class FoamServlet extends HttpServlet {
 					errId = "true";
 					feedbackIdMessage = String.format("Required field");
 					errList.put("National Id missing", "required field");
-				} else if (rosterDB.isOnRoster(newId)) {
+				}
+				// duplicate id is rejected in add mode and required in edit mode
+				else if (rosterDB.isOnRoster(newId)) {
 					if ("add".equals(mode)) {
 						errId = "true";
 						feedbackIdMessage = String.format("'%s' is already in roster", newId);
@@ -195,7 +198,8 @@ public class FoamServlet extends HttpServlet {
 				} else {
 					errId = "false";
 				}
-
+				
+				//validate last name
 				String newLast = request.getParameter("newLast");
 				newLast = newLast != null ? newLast.trim() : null;
 				String errLast = null;
@@ -207,7 +211,8 @@ public class FoamServlet extends HttpServlet {
 				} else {
 					errLast = "false";
 				}
-
+				
+				// validate first name
 				String newFirst = request.getParameter("newFirst").trim();
 				newFirst = newFirst != null ? newFirst.trim() : null;
 				String errFirst = null;
@@ -219,7 +224,8 @@ public class FoamServlet extends HttpServlet {
 				} else {
 					errFirst = "false";
 				}
-
+				
+				// validate date of birth
 				String newDobString = request.getParameter("newDob");
 				newDobString = newDobString != null ? newDobString.trim() : null;
 				String errDob = null;
@@ -250,6 +256,7 @@ public class FoamServlet extends HttpServlet {
 					}
 				}
 
+				// if validation passed then add or update the athlete depending on the mode
 				readyToAdd = errList.isEmpty();
 				if (readyToAdd) {
 					// create new athlete
@@ -267,7 +274,9 @@ public class FoamServlet extends HttpServlet {
 						errId = "true";
 						feedbackIdMessage = String.format("%s is no longer in the roster.", newId);
 						errList.put("Update error", String.format(
-								"Cannot use the update form to create new athletes. Unable to update %s.", newAthlete));
+								"Athlete with id '%s' is no longer on the roster. Click cancel or add athlete to create a new athlete.", newId));
+						request.setAttribute("updateDisabled", true);
+						request.setAttribute("addEnabled", true);
 					}
 
 				}
