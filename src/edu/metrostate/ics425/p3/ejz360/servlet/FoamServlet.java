@@ -37,12 +37,48 @@ public class FoamServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getQueryString() != null) {
+		String action = request.getParameter("action");
+
+		if ("delete".equals(action)) {
+			deleteAthlete(request, response);
+
+		} else if (request.getQueryString() != null) {
+
 			request.getRequestDispatcher("/error-404.jsp").forward(request, response);
 		} else {
 			processRequest(request, response);
 		}
 
+	}
+
+	private void deleteAthlete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		var sc = getServletContext();
+		Roster rosterDB = (Roster) sc.getAttribute("rosterDB");
+		HashMap<String, String> errList = new HashMap<String, String>();
+		String url = "/index.jsp";
+		try {
+			if (rosterDB.isOnRoster(id))
+				rosterDB.delete(id);
+			else {
+				errList.put("Unkown ID", String.format("Athlete with id: %s does not exist.", id));
+			}
+		} catch (RosterException e) {
+			errList.put("Delete error", "Unable to delete athlete " + id);
+		}
+
+		try {
+			request.setAttribute("roster", rosterDB.findAll());
+		} catch (RosterException e) {
+			errList.put("Roster error", "Unable to read roster.");
+		}
+
+		if (!errList.isEmpty()) {
+			request.setAttribute("errMsg", errList);
+		}
+
+		request.getRequestDispatcher(url).forward(request, response);
 	}
 
 	/**
@@ -72,8 +108,7 @@ public class FoamServlet extends HttpServlet {
 
 		if (action.equals("view")) {
 
-			// Create new Athlete
-		} else if (action.equals("create-new")) {
+		} else if (action.equals("create-new")) { // Create new Athlete
 			boolean readyToAdd = false;
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
