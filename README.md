@@ -21,3 +21,7 @@ Scenario - Eligibility  - Age displayed
  * Born on the day of the olympics - ineligible, age of 0
  * Born after the Olympics - ineligible, no age displayed
  
+### delete and update conflicts
+
+* If a user attempts to delete an athlete twice the system reports the id is no longer on the roster
+* If a user attempts to edit an athlete that is deleted the system reports the id is no longer on the roster and allows the user to add the current information as a new athelete.
