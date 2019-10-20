@@ -164,19 +164,22 @@ public class FoamServlet extends HttpServlet {
 		String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
 		request.setAttribute("welcome", welcome);
 
-		// get current action
+		// get current action and mode
 		String action = request.getParameter("action");
+		String mode = request.getParameter("mode");
 		if (action == null) {
 			action = "view";
 		}
 
 		if (action.equals("view")) {
 
-		} else if (action.equals("create-new")) { // Create new Athlete
+		} else if ("create-new".equals(action) && mode != null) { // Create new Athlete
 			boolean readyToAdd = false;
+			
 			HashMap<String, String> errList = new HashMap<String, String>();
 			try {
-				String newId = request.getParameter("newId").trim();
+				String newId = request.getParameter("newId");
+				newId = newId != null ? newId.trim() : null;
 				String errId = null;
 				String feedbackIdMessage = null;
 				if (newId.isBlank()) {
@@ -184,14 +187,20 @@ public class FoamServlet extends HttpServlet {
 					feedbackIdMessage = String.format("Required field");
 					errList.put("National Id missing", "required field");
 				} else if (rosterDB.isOnRoster(newId)) {
-					errId = "true";
-					feedbackIdMessage = String.format("'%s' is already in roster", newId);
-					errList.put("DupId", String.format("%s is a duplicate id.", newId));
+					if ("add".equals(mode)) {
+						errId = "true";
+						feedbackIdMessage = String.format("'%s' is already in roster", newId);
+						errList.put("DupId", String.format("%s is a duplicate id.", newId));
+					}
+					else if("edit".equals(mode)){
+						errId = "false";
+					}
 				} else {
 					errId = "false";
 				}
 
-				String newLast = request.getParameter("newLast").trim();
+				String newLast = request.getParameter("newLast");
+				newLast = newLast != null ? newLast.trim() : null;
 				String errLast = null;
 				String feedbackLastMessage = null;
 				if (newLast.isBlank()) {
@@ -203,6 +212,7 @@ public class FoamServlet extends HttpServlet {
 				}
 
 				String newFirst = request.getParameter("newFirst").trim();
+				newFirst = newFirst != null ? newFirst.trim() : null;
 				String errFirst = null;
 				String feedbackFirstMessage = null;
 				if (newFirst.isBlank()) {
@@ -214,6 +224,7 @@ public class FoamServlet extends HttpServlet {
 				}
 
 				String newDobString = request.getParameter("newDob");
+				newDobString = newDobString != null ? newDobString.trim() : null;
 				String errDob = null;
 				String feedbackDobMessage = null;
 
@@ -246,19 +257,21 @@ public class FoamServlet extends HttpServlet {
 				if (readyToAdd) {
 					// create new athlete
 					AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
-					// add athlete to roster
-					boolean added = rosterDB.add(newAthlete);
-
-					// one last check for duplicate id in case it was added while waiting for user
-					// input
-					if (!added) {
+					
+					// add athlete to roster and one last check for duplicate id in case it was added while waiting for user
+					if("add".equals(mode) && !rosterDB.add(newAthlete)) {
+						
 						errId = "true";
 						feedbackIdMessage = String.format("%s is already in roster", newId);
 						errList.put("DupId",
 								String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
-					} else {
-						errId = "false";
+					} else if ("edit".equals(mode) && !rosterDB.update(newAthlete)) {
+						errId = "true";
+						feedbackIdMessage = String.format("%s is already in roster", newId);
+						errList.put("Update error",
+								String.format("Cannot use the update form to create new athletes. Unable to update %s.", newAthlete));
 					}
+
 				}
 
 				// send all other messages to the view
@@ -281,7 +294,7 @@ public class FoamServlet extends HttpServlet {
 				if (!errList.isEmpty()) {
 					request.setAttribute("errMsg", errList);
 
-					url = "/add.jsp";
+					url = "add".equals(mode)? "/add.jsp" : "edit.jsp";
 				} else {
 					url = "/index.jsp";
 				}
