@@ -151,32 +151,30 @@ public class FoamServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		processRequest(request, response);
+
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		var sc = getServletContext();
-		String url = "index.jsp";
+		String url = "/index.jsp";
+		HashMap<String, String> errList = new HashMap<String, String>();
 		Roster rosterDB = (Roster) sc.getAttribute("rosterDB");
 		String welcome = "Welcome to the Freedonia Olympic" + "Athlete Management System (FOAMS).";
 		request.setAttribute("welcome", welcome);
 
 		// get current action and mode
 		String action = request.getParameter("action");
+		action = action == null || action.isBlank() ? "view" : action;
 		String mode = request.getParameter("mode");
-		if (action == null) {
-			action = "view";
-		}
 
-		if (action.equals("view")) {
-
+		if ("view".equals(action)) {
+			// requests with no action are allowed to be processed
 		} else if ("create-new".equals(action) && mode != null) { // Create new Athlete
 			boolean readyToAdd = false;
-			
-			HashMap<String, String> errList = new HashMap<String, String>();
+
 			try {
 				String newId = request.getParameter("newId");
 				newId = newId != null ? newId.trim() : null;
@@ -191,8 +189,7 @@ public class FoamServlet extends HttpServlet {
 						errId = "true";
 						feedbackIdMessage = String.format("'%s' is already in roster", newId);
 						errList.put("DupId", String.format("%s is a duplicate id.", newId));
-					}
-					else if("edit".equals(mode)){
+					} else if ("edit".equals(mode)) {
 						errId = "false";
 					}
 				} else {
@@ -257,19 +254,20 @@ public class FoamServlet extends HttpServlet {
 				if (readyToAdd) {
 					// create new athlete
 					AthleteBean newAthlete = createAthlete(newId, newLast, newFirst, newDob);
-					
-					// add athlete to roster and one last check for duplicate id in case it was added while waiting for user
-					if("add".equals(mode) && !rosterDB.add(newAthlete)) {
-						
+
+					// add athlete to roster and one last check for duplicate id in case it was
+					// added while waiting for user
+					if ("add".equals(mode) && !rosterDB.add(newAthlete)) {
+
 						errId = "true";
 						feedbackIdMessage = String.format("%s is already in roster", newId);
 						errList.put("DupId",
 								String.format("%s is a duplicate id.\n Cannot add: %s.", newId, newAthlete));
 					} else if ("edit".equals(mode) && !rosterDB.update(newAthlete)) {
 						errId = "true";
-						feedbackIdMessage = String.format("%s is already in roster", newId);
-						errList.put("Update error",
-								String.format("Cannot use the update form to create new athletes. Unable to update %s.", newAthlete));
+						feedbackIdMessage = String.format("%s is no longer in the roster.", newId);
+						errList.put("Update error", String.format(
+								"Cannot use the update form to create new athletes. Unable to update %s.", newAthlete));
 					}
 
 				}
@@ -292,16 +290,15 @@ public class FoamServlet extends HttpServlet {
 				errList.put("errMsg", String.format("%s.", ex.getMessage()));
 			} finally {
 				if (!errList.isEmpty()) {
-					request.setAttribute("errMsg", errList);
-
-					url = "add".equals(mode)? "/add.jsp" : "edit.jsp";
+					url = "add".equals(mode) ? "/add.jsp" : "edit.jsp";
 				} else {
 					url = "/index.jsp";
 				}
 
 			}
 		} else {
-			request.setAttribute("errMsg", "Invalid action");
+			errList.put("Application error", "Invalid action");
+			request.setAttribute("errMsg", errList);
 			url = "/index.jsp";
 		}
 
@@ -309,10 +306,9 @@ public class FoamServlet extends HttpServlet {
 		try {
 			request.setAttribute("roster", rosterDB.findAll());
 		} catch (RosterException e) {
-			e.printStackTrace();
-			request.setAttribute("errMsg", "Unable to send roster to browser. " + e.getMessage());
+			errList.put("Roster error", "Unable to send roster to browser. " + e.getMessage());
 		}
-
+		request.setAttribute("errMsg", errList);
 		// Forward control to the view
 		request.getRequestDispatcher(url).forward(request, response);
 	}
