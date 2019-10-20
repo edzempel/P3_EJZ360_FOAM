@@ -26,8 +26,8 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item"><a class="nav-link" href="FoamServlet">Home
 				</a></li>
-				<li class="nav-item active"><a class="nav-link" href="add.jsp">Add
-						athletes</a><span class="sr-only">(current)</span></li>
+				<li class="nav-item"><a class="nav-link" href="add.jsp">Add
+						athletes</a></li>
 				<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
 			</ul>
 		</div>
