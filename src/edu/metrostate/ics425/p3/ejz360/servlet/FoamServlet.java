@@ -38,8 +38,10 @@ public class FoamServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
+		if ("edit-form".equals(action)) {
+			editForm(request, response);
 
-		if ("confirmDelete".equals(action)) {
+		} else if ("confirmDelete".equals(action)) {
 			confirmDelete(request, response);
 
 		} else if ("delete".equals(action)) {
@@ -52,6 +54,34 @@ public class FoamServlet extends HttpServlet {
 			processRequest(request, response);
 		}
 
+	}
+
+	private void editForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		String url = "/index.jsp";
+		HashMap<String, String> errList = new HashMap<String, String>();
+		var sc = getServletContext();
+		Roster rosterDB = (Roster) sc.getAttribute("rosterDB");
+
+		try {
+			if (rosterDB.isOnRoster(id)) {
+				AthleteBean athlete = (AthleteBean) rosterDB.find(id);
+				request.setAttribute("athlete", athlete);
+				url = "/edit.jsp";
+			} else {
+				errList.put("Unkown ID", String.format("Athlete with id: %s is no longer on the roster.", id));
+				request.setAttribute("roster", rosterDB.findAll());
+				url = "/index.jsp";
+			}
+		} catch (RosterException e) {
+			errList.put("Roster error", "Unable to access roster.");
+		}
+		if (!errList.isEmpty()) {
+			request.setAttribute("errMsg", errList);
+		}
+
+		request.getRequestDispatcher(url).forward(request, response);
 	}
 
 	private void confirmDelete(HttpServletRequest request, HttpServletResponse response)
