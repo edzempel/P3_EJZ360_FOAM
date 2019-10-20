@@ -42,6 +42,7 @@
 			
 			<div>
 				<input type="hidden" name="action" value="create-new">
+				<input type="hidden" name="mode" value="edit">
 			</div>
 			
 			<div class="form-group">
