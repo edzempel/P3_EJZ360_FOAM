@@ -61,18 +61,24 @@
 								value="${athlete.dateOfBirth}" /></td>
 						<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out
 								value="${athlete.age < 0 ? '' : athlete.age}" /></td>
-						<td><a href='edit?id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
+						<td><a href='?action=edit&id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
 						<td><a
-							href='delete?id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
+							href='delete?action=delete&id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 
 		<div class="${!empty errMsg ? 'alert alert-danger' : '' }"
-			role="alert">
-			<c:out value="${errMsg}" />
-		</div>
+				role="alert">
+				<c:forEach var="err" items="${errMsg}">
+					<p>
+						<span><c:out value="${err.key}" /> :</span>
+						<c:out value="${err.value}" />
+					</p>
+				</c:forEach>
+
+			</div>
 
 		<form name="form-add" id="form-add" action="add.jsp" method="post">
 			<input class="btn btn-primary" type="submit" value="addAthlete"
