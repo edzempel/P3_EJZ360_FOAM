@@ -59,9 +59,10 @@ public class FoamServlet extends HttpServlet {
 		HashMap<String, String> errList = new HashMap<String, String>();
 		String url = "/index.jsp";
 		try {
-			if (rosterDB.isOnRoster(id))
+			if (rosterDB.isOnRoster(id)) {
 				rosterDB.delete(id);
-			else {
+				url = "/index.jsp";
+			} else {
 				errList.put("Unkown ID", String.format("Athlete with id: %s does not exist.", id));
 			}
 		} catch (RosterException e) {
