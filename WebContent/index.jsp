@@ -61,7 +61,7 @@
 								value="${athlete.dateOfBirth}" /></td>
 						<td ${athlete.eligible == "false" ? "class='table-danger'" : ''  }><c:out
 								value="${athlete.age < 0 ? '' : athlete.age}" /></td>
-						<td><a href='?action=edit&id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
+						<td><a href='edit?action=edit&id=<c:out value="${athlete.nationalID}" />'>edit</a></td>
 						<td><a
 							href='delete?action=confirmDelete&id=<c:out value="${athlete.nationalID}" />'>delete</a></td>
 					</tr>
@@ -81,7 +81,7 @@
 			</div>
 
 		<form name="form-add" id="form-add" action="add.jsp" method="post">
-			<input class="btn btn-primary" type="submit" value="addAthlete"
+			<input class="btn btn-primary" type="submit" value="Add athlete"
 				id="submit-add" />
 
 		</form>
