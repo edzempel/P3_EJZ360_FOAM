@@ -16,7 +16,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand navbar-dark bg-dark">
-		<a class="navbar-brand" href="FoamServlet">FOAMS</a>
+		<a tabindex="1" class="navbar-brand" href="FoamServlet">FOAMS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -40,14 +40,14 @@
 		<form class="form" name="form-new" id="form-new" action="add"
 			method="post">
 			<div class="form-group">
-				<label for="nationalId">National ID</label> <input id="nationalId"
+				<label for="nationalId">National ID</label> <input tabindex="2" id="nationalId"
 					class="form-control ${errId == null ? null: errId ? 'is-invalid' : 'is-valid'}"
 					name="newId" placeholder="national ID" pattern="[A-Za-z0-9-.]+"
 					required type="text" value="<c:out value='${param.newId}'/>" />
 				<div class="${!errId ? 'valid-feedback' : 'invalid-feedback'}">${feedbackIdMessage}</div>
 			</div>
 			<div class="form-group">
-				<label for="form-new-lastName">Last name</label> <input
+				<label for="form-new-lastName">Last name</label> <input tabindex="3"
 					id="form-new-lastName"
 					class="form-control ${errLast == null ? null: errLast ? 'is-invalid' : 'is-valid'}"
 					name="newLast" placeholder="last name" pattern=".+" required
@@ -55,7 +55,7 @@
 				<div class="${!errLast ? 'valid-feedback' : 'invalid-feedback'}">${feedbackLastMessage}</div>
 			</div>
 			<div class="form-group">
-				<label for="form-new-firstName">First name</label><input
+				<label for="form-new-firstName">First name</label><input tabindex="4"
 					id="form-new-firstName"
 					class="form-control ${errFirst == null ? null: errFirst ? 'is-invalid' : 'is-valid'}"
 					name="newFirst" placeholder="fist name" pattern=".+" required
@@ -63,7 +63,7 @@
 				<div class="${!errFirst ? 'valid-feedback' : 'invalid-feedback'}">${feedbackFirstMessage}</div>
 			</div>
 			<div class="form-group">
-				<label for="form-new-dob">Date of birth</label> <input
+				<label for="form-new-dob">Date of birth</label> <input tabindex="5"
 					class="form-control ${errDob == null ? null: errDob ? 'is-invalid' : 'is-valid'}"
 					type="date" id="form-new-dob" name="newDob"
 					value="<c:out value='${param.newDob}'/>" min="1900-01-01"
@@ -85,9 +85,9 @@
 
 			</div>
 			<div>
-				<button class="btn btn-secondary" type="reset">Clear form</button>
-				<a href="FoamServlet"><button class="btn btn-danger"
-						type="button">Cancel</button></a> <input class="btn btn-primary"
+				<button tabindex="8" class="btn btn-secondary" type="reset">Clear form</button>
+				<a href="FoamServlet"><button tabindex="7" class="btn btn-danger"
+						type="button">Cancel</button></a> <input tabindex="6" class="btn btn-primary"
 					type="submit" value="Add athlete" id="submit-new" />
 			</div>
 
